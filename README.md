@@ -1,5 +1,5 @@
 # IstaApi
-Api made to search words which ends with 'ista' in polish dictionary
+Api made to search words which ends with provided ending in polish dictionary
 
 ## Installation
 
@@ -19,5 +19,10 @@ npm install
 node app.js
 ```
 
+## How to use
+http://localhost:3000/api?word=word_to_choose 'word_to_choose' is your word that ends with, what you provided,
+<br> after this query, API returns json array of elements 
+
+
 ## License
-MIT
+<a href="https://github.com/Lukeuke/IstaApi/blob/main/LICENSE" target="_blank"> MIT </a>
