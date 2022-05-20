@@ -14,6 +14,8 @@ app.get('/', (req, res) => {
 
 app.get('/api', (req, res) => {
 
+    res.setHeader('content-type', 'application/json');
+
     var queryParam = req.query;
     var word = queryParam.word
 
