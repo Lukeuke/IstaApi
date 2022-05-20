@@ -12,12 +12,29 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.get('/ista', (req, res) => {
+app.get('/api', (req, res) => {
+
+    var queryParam = req.query;
+    var word = queryParam.word
+
+    if(!word) {
+        res.json({
+            error: 'No word provided'
+        })
+        return
+    }
+
+    console.log(word)
+
     axios.get(url).then((response) => {
         const data = response.data
-        const ista = data.match(/[a-zA-Z]+ista/g)
-        const json = JSON.stringify(ista)
-        res.send(json)
+
+        // find words in data that are ending on specific word from query
+        const words = data.split('\n').filter(w => w.endsWith(word))
+
+        console.log(words)
+
+        res.send(words)
     })
 })
 

@@ -10,6 +10,10 @@ git clone https://github.com/Lukeuke/IstaApi.git
 1. Rename file called '.env-example' to '.env'
 1. In 'PORT=your_port_number' goes your port number
 1. In 'HOST=ip_address' goes your host for example: localhost
+1. To start the api type
+```bash
+node app.js
+```
 
 ## License
 MIT
