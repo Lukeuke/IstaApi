@@ -3,6 +3,7 @@ require('dotenv').config()
 const PORT = process.env.PORT || 5000
 const HOST = process.env.HOST || 'localhost'
 const { default: axios } = require('axios')
+const cheerio = require('cheerio')
 const express = require('express')
 const app = express()
 
@@ -42,17 +43,37 @@ app.get('/api', (req, res) => {
     })
 })
 
-app.post('/test/:id', (req, res) => {
-    const { id } = req.params;
+app.post('/dictionary', (req, res) => {
+
+    const item = [];
+    var desc;
+
     const { word } = req.body;
 
     if(!word) {
         res.status(418).send({error: 'no word provided'})
     }
 
-    res.send({
-        description: `Some description for word: ${word}`,
+    console.log(word)
+
+    axios(`https://sjp.pl/${word}`).then(response => {
+
+        const html = response.data
+        const $ = cheerio.load(html)
+
+        $('p').each(function() {
+            item.push($(this).text())
+        })
+
+        desc = item[3]
+
+        console.log(desc)  
+        
+        res.send({
+            description: `${desc}`
+        })
     })
+
 })
 
 app.listen(PORT, HOST, () => {
