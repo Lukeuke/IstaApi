@@ -8,6 +8,8 @@ const app = express()
 
 const url = 'https://raw.githubusercontent.com/sigo/polish-dictionary/master/dist/pl.txt'
 
+app.use(express.json())
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
@@ -37,6 +39,19 @@ app.get('/api', (req, res) => {
         console.log(words)
 
         res.send(words)
+    })
+})
+
+app.post('/test/:id', (req, res) => {
+    const { id } = req.params;
+    const { word } = req.body;
+
+    if(!word) {
+        res.status(418).send({error: 'no word provided'})
+    }
+
+    res.send({
+        description: `Some description for word: ${word}`,
     })
 })
 
