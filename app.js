@@ -57,7 +57,9 @@ app.post('/dictionary', (req, res) => {
 
     console.log(word)
 
-    axios(`https://sjp.pl/${word}`).then(response => {
+    let encoded = encodeURI(word);
+
+    axios('https://sjp.pl/' + encoded).then(response => {
 
         const html = response.data
         const $ = cheerio.load(html)
@@ -71,8 +73,14 @@ app.post('/dictionary', (req, res) => {
         console.log(desc)  
         
         res.status(200).send({
-            description: `${desc}`
+            word: word,
+            description: desc
         })
+    }).catch((error) => {
+        res.json({
+            error: error
+        })
+        return
     })
 
 })
@@ -110,9 +118,10 @@ app.post('/urban', (req, res) => {
         description = descriptionArr[0];
                 
         res.status(200).send({
-            description: `${description}`,
-            example: `${example}`,
-            contributor: `${contributor}`
+            word: word,
+            description: description,
+            example: example,
+            contributor: contributor
         })
     }).catch(error => {
         res.status(404).send({
