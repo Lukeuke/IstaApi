@@ -77,6 +77,52 @@ app.post('/dictionary', (req, res) => {
 
 })
 
+app.post('/urban', (req, res) => {
+
+    const { word } = req.body
+
+    const exampleArr = [];
+    const descriptionArr = [];
+    var example
+    var description
+    var contributor
+
+    console.log(word)
+
+    if(!word) return res.status(418).send({error: 'no word provided'})
+
+    axios(`https://www.urbandictionary.com/define.php?term=${word}`).then(response => {
+
+        const html = response.data
+        const $ = cheerio.load(html)
+
+        $('.example').each(function() {
+            exampleArr.push($(this).text())
+        })
+        $('.meaning').each(function() {
+            descriptionArr.push($(this).text())
+        })
+        $('.contributor').each(function() {
+            contributor = $(this).text()
+        })
+      
+        example = exampleArr[0];
+        description = descriptionArr[0];
+                
+        res.send({
+            description: `${description}`,
+            example: `${example}`,
+            contributor: `${contributor}`
+        })
+    }).catch(error => {
+        res.send({
+            error: `No definition for word: ${word}`,
+            status: error.response.status
+        })
+    })
+
+})
+
 app.listen(PORT, HOST, () => {
     console.log(`Server listening on ${HOST} and on port ${PORT}`)
 })
