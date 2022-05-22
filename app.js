@@ -52,6 +52,7 @@ app.post('/dictionary', (req, res) => {
 
     if(!word) {
         res.status(418).send({error: 'no word provided'})
+        return
     }
 
     console.log(word)
