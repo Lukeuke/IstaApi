@@ -70,7 +70,7 @@ app.post('/dictionary', (req, res) => {
 
         console.log(desc)  
         
-        res.send({
+        res.status(200).send({
             description: `${desc}`
         })
     })
@@ -109,15 +109,15 @@ app.post('/urban', (req, res) => {
         example = exampleArr[0];
         description = descriptionArr[0];
                 
-        res.send({
+        res.status(200).send({
             description: `${description}`,
             example: `${example}`,
             contributor: `${contributor}`
         })
     }).catch(error => {
-        res.send({
+        res.status(404).send({
             error: `No definition for word: ${word}`,
-            status: error.response.status
+            status_from_urban: error.response.status
         })
     })
 
