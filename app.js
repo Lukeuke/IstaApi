@@ -132,6 +132,6 @@ app.post('/urban', (req, res) => {
 
 })
 
-app.listen(PORT, HOST, () => {
+app.listen(PORT, /*HOST ,*/ () => {
     console.log(`Server listening on ${HOST} and on port ${PORT}`)
 })
